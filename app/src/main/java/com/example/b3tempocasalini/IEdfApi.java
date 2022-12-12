@@ -15,4 +15,7 @@ public interface IEdfApi {
 
     @GET("services/rest/referentiel/searchTempoStore")
     Call<TempoDaysColor> getTempoDaysColor(@Query("dateRelevant") String relevantDate, @Query("TypeAlerte") String alertType);
+
+    @GET("services/rest/referentiel/historicTEMPOStore")
+    Call<TempoHistory> getTempoHistory(@Query("dateBegin") String beginningDate, @Query("dateEnd") String endingDate);
 }
