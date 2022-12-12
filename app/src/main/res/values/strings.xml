@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">B3TempoCasalini</string>
     <string name="not_available">Not Available</string>
+    <string name="dcv_tomorrow_tx">Demain</string>
+    <string name="dcv_today_tx">Aujourd\'hui</string>
+    <string name="not_set">Not Set</string>
+    <string name="historical">Historique !</string>
 </resources>
