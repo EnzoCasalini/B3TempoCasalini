@@ -3,8 +3,10 @@ package com.example.b3tempocasalini;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.b3tempocasalini.databinding.ActivityMainBinding;
 
@@ -15,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static IEdfApi edfApi;
     ActivityMainBinding binding;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Init Views
+        binding.historyBt.setOnClickListener(this);
+
 
         // Init Retrofit client
         Retrofit retrofitClient = ApiClient.get();
@@ -85,5 +91,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, "Call to getTempoDaysColor() failed");
             }
         });
+    }
+
+//    public void showHistory(View view) {
+//
+//    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        intent.setClass(this, HistoryActivity.class);
+        startActivity(intent);
     }
 }

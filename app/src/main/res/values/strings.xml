@@ -5,4 +5,5 @@
     <string name="dcv_today_tx">Aujourd\'hui</string>
     <string name="not_set">Not Set</string>
     <string name="historical">Historique !</string>
+    <string name="historique_tempo">Historique Tempo</string>
 </resources>
