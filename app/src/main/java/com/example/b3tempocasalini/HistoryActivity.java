@@ -3,6 +3,8 @@ package com.example.b3tempocasalini;
 import static com.example.b3tempocasalini.MainActivity.edfApi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.b3tempocasalini.databinding.ActivityHistoryBinding;
 
 import android.os.Bundle;
@@ -24,12 +26,19 @@ public class HistoryActivity extends AppCompatActivity {
     // Data model
     List<TempoDate> tempoDates = new ArrayList<>();
 
+    TempoDateAdapter tempoDateAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Init recycler view
+        binding.tempoHistoryRv.setHasFixedSize(true); // On dit au recycler view que tous les éléments ont la même taille. Le fait de le mettre à true veut dire que : les changements ne pourront pas affecter les changements de la recycler view.
+        binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this)); // LinearLayoutManager qui permet d'arranger les élements sous forme de liste.
+        tempoDateAdapter = new TempoDateAdapter(tempoDates, this);
+        binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
 
         if (edfApi != null)
         {
@@ -45,6 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
                         tempoDates.addAll(response.body().getTempoDates());
                         Log.d(LOG_TAG, "nb elements = " + tempoDates.size());
                     }
+                    tempoDateAdapter.notifyDataSetChanged();
                 }
 
                 @Override
