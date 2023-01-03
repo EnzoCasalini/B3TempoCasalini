@@ -6,4 +6,8 @@
     <string name="not_set">Not Set</string>
     <string name="historical">Historique !</string>
     <string name="historique_tempo">Historique Tempo</string>
+    <string name="channel_name">Alertes Tempo</string>
+    <string name="channel_description">Alertes Tempo pour les jours rouges et blancs</string>
+    <string name="notif_title">Warning /!\</string>
+    <string name="notif_text">Tomorrow is :  </string>
 </resources>

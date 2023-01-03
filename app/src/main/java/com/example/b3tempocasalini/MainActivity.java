@@ -2,8 +2,13 @@ package com.example.b3tempocasalini;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static IEdfApi edfApi;
     ActivityMainBinding binding;
 
+    private static final String CHANNEL_ID = "notif_channel_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Init Views
         binding.historyBt.setOnClickListener(this);
+
+        // Create notification channel
+        createNotificationChannel();
 
 
         // Init Retrofit client
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(LOG_TAG, "color of the next day = " + tdc.getCouleurJourJ1().toString());
                     binding.todayDcv.setDayCircleColor(tdc.getCouleurJourJ());
                     binding.tomorrowDcv.setDayCircleColor(tdc.getCouleurJourJ1());
+                    checkColor4Notif(tdc.getCouleurJourJ1());
                 }
                 else {
                     Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code : " + response.code());
@@ -96,6 +106,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    public void showHistory(View view) {
 //
 //    }
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
+    private void checkColor4Notif(TempoColor nextDayColor) {
+        if (nextDayColor == TempoColor.RED || nextDayColor == TempoColor.WHITE)
+        {
+//            Intent intent = new Intent(this, AlertDetails.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(getString(R.string.notif_title))
+                    .setContentText(getString(R.string.notif_text) + nextDayColor)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    // Set the intent that will fire when the user taps the notification
+                    // .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+            // notificationId is a unique int for each notification that you must define
+            notificationManager.notify(Tools.getNextNotifId(), builder.build());
+        }
+    }
+
+
 
     @Override
     public void onClick(View v) {
