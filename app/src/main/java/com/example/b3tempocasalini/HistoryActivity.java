@@ -9,6 +9,7 @@ import com.example.b3tempocasalini.databinding.ActivityHistoryBinding;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void apiTempoHistory() {
+        // On affiche la progressBar.
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         Call<TempoHistory> call = edfApi.getTempoHistory("2021", "2022");
 
         call.enqueue(new Callback<TempoHistory>() {
@@ -67,6 +71,8 @@ public class HistoryActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "nb elements = " + tempoDates.size());
                 }
                 tempoDateAdapter.notifyDataSetChanged();
+                // On cache la progressBar.
+                binding.progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
