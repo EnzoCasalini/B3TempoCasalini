@@ -42,26 +42,37 @@ public class HistoryActivity extends AppCompatActivity {
 
         if (edfApi != null)
         {
-            // Create call
-            Call<TempoHistory> call = edfApi.getTempoHistory("2021", "2022");
-
-            call.enqueue(new Callback<TempoHistory>() {
-                @Override
-                public void onResponse(Call<TempoHistory> call, Response<TempoHistory> response) {
-                    tempoDates.clear();
-                    if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null)
-                    {
-                        tempoDates.addAll(response.body().getTempoDates());
-                        Log.d(LOG_TAG, "nb elements = " + tempoDates.size());
-                    }
-                    tempoDateAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<TempoHistory> call, Throwable t) {
-
-                }
-            });
+            // Call the API.
+            apiTempoHistory();
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // Call the API.
+        apiTempoHistory();
+    }
+
+    private void apiTempoHistory() {
+        Call<TempoHistory> call = edfApi.getTempoHistory("2021", "2022");
+
+        call.enqueue(new Callback<TempoHistory>() {
+            @Override
+            public void onResponse(Call<TempoHistory> call, Response<TempoHistory> response) {
+                tempoDates.clear();
+                if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null)
+                {
+                    tempoDates.addAll(response.body().getTempoDates());
+                    Log.d(LOG_TAG, "nb elements = " + tempoDates.size());
+                }
+                tempoDateAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<TempoHistory> call, Throwable t) {
+
+            }
+        });
     }
 }
