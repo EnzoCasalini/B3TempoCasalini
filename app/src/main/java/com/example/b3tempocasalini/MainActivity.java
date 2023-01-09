@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(getString(R.string.notif_title))
-                    .setContentText(getString(R.string.notif_text) + nextDayColor)
+                    .setContentText(getString(R.string.notif_text, getString(nextDayColor.getStringResId())))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     // Set the intent that will fire when the user taps the notification
                     // .setContentIntent(pendingIntent)

@@ -4,14 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b3tempocasalini.databinding.ActivityMainBinding;
 import com.example.b3tempocasalini.databinding.TempoDateItemBinding;
 
 import java.util.List;
@@ -41,7 +38,7 @@ public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.Temp
     @Override
     public void onBindViewHolder(@NonNull TempoDateViewHolder holder, int position) {
         holder.binding.dateTv.setText(localTempoDates.get(position).getDate());
-        holder.binding.colorFl.setBackgroundColor(ContextCompat.getColor(context, localTempoDates.get(position).getCouleur().getResId()));
+        holder.binding.colorFl.setBackgroundColor(ContextCompat.getColor(context, localTempoDates.get(position).getCouleur().getColorResId()));
     }
 
 /* Ancienne façon de faire avec le findViewById

@@ -56,10 +56,21 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void apiTempoHistory() {
+        String yearNow = Tools.getNowDate("yyyy");
+        String yearBefore = "";
+
+        try {
+            yearBefore = String.valueOf(Integer.parseInt(yearNow) - 1);
+        }
+        catch (NumberFormatException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+
         // On affiche la progressBar.
         binding.progressBar.setVisibility(View.VISIBLE);
 
-        Call<TempoHistory> call = edfApi.getTempoHistory("2021", "2022");
+        Call<TempoHistory> call = edfApi.getTempoHistory(yearBefore, yearNow);
 
         call.enqueue(new Callback<TempoHistory>() {
             @Override
