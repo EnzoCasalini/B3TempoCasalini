@@ -43,7 +43,6 @@ public class TempoDateAdapter2 extends RecyclerView.Adapter<TempoDateAdapter2.Te
         holder.binding.dateValueTv.setText(formatTempoHistoryDate(localTempoDates.get(position).getDate()));
         holder.binding.colorValueTv.setText(localTempoDates.get(position).getCouleur().getStringResId());
         holder.binding.colorFl2.setBackgroundColor(ContextCompat.getColor(context, localTempoDates.get(position).getCouleur().getColorResId()));
-        holder.binding.spaceFl.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600));
     }
 
 

@@ -83,7 +83,7 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 tempoDateAdapter.notifyDataSetChanged();
                 // On cache la progressBar.
-                binding.progressBar.setVisibility(View.INVISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
             }
 
             @Override

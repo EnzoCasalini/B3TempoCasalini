@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.b3tempocasalini.databinding.ActivityHistory2Binding;
 
@@ -19,14 +22,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HistoryActivity2 extends AppCompatActivity {
-    private static final String LOG_TAG = HistoryActivity.class.getSimpleName();
+public class HistoryActivity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private static final String LOG_TAG = HistoryActivity2.class.getSimpleName();
     ActivityHistory2Binding binding;
 
     // Data model
     List<TempoDate> tempoDates = new ArrayList<>();
 
     TempoDateAdapter2 tempoDateAdapter;
+    String[] yearsArray = Tools.getLastNYearDate(6);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +44,28 @@ public class HistoryActivity2 extends AppCompatActivity {
         tempoDateAdapter = new TempoDateAdapter2(tempoDates, this);
         binding.tempoHistory2Rv.setAdapter(tempoDateAdapter);
 
+        Spinner spinner = (Spinner) binding.spinnerYears;
+        spinner.setOnItemSelectedListener(this);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearsArray);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         if (edfApi != null)
         {
             // Call the API.
-            apiTempoHistory();
+            apiTempoHistory(2022);
         }
     }
 
-    private void apiTempoHistory() {
-        String yearNow = Tools.getNowDate("yyyy");
+    private void apiTempoHistory(int year) {
+        String yearNow = String.valueOf(year);
         String yearBefore = "";
 
         try {
-            yearBefore = String.valueOf(Integer.parseInt(yearNow) - 1);
+            yearBefore = String.valueOf(year - 1);
         }
         catch (NumberFormatException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -75,7 +88,7 @@ public class HistoryActivity2 extends AppCompatActivity {
                 }
                 tempoDateAdapter.notifyDataSetChanged();
                 // On cache la progressBar.
-                binding.progressBarHistory2.setVisibility(View.INVISIBLE);
+                binding.progressBarHistory2.setVisibility(View.GONE);
             }
 
             @Override
@@ -83,5 +96,16 @@ public class HistoryActivity2 extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String year = (String) parent.getItemAtPosition(position);
+        apiTempoHistory(Integer.valueOf(year));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Log.d(LOG_TAG, "Nothing to do here");
     }
 }
