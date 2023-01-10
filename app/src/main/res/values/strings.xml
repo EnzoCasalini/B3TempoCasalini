@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">B3TempoCasalini</string>
     <string name="not_available">Not Available</string>
-    <string name="dcv_tomorrow_tx">Demain</string>
-    <string name="dcv_today_tx">Aujourd\'hui</string>
+    <string name="dcv_tomorrow_tx">Demain : %s</string>
+    <string name="dcv_today_tx">Aujourd\'hui : %s</string>
     <string name="not_set">Not Set</string>
     <string name="historical">Historique !</string>
     <string name="historique_tempo">Historique Tempo</string>
@@ -10,8 +11,8 @@
     <string name="channel_description">Alertes Tempo pour les jours rouges et blancs</string>
     <string name="notif_title">Attention /!\</string>
     <string name="notif_text">"Demain jour : %s !"</string>
-    <string name="red">rouge</string>
-    <string name="blue">bleu</string>
-    <string name="white">blanc</string>
-    <string name="unknown">inconnu</string>
+    <string name="red">Rouge</string>
+    <string name="blue">Bleu</string>
+    <string name="white">Blanc</string>
+    <string name="unknown">ND</string>
 </resources>
