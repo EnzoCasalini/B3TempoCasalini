@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 public class DayColorView extends View {
     private static final float CIRCLE_SCALE = 0.9f; // circle will occupy 90% of the room's view.
     private String captionText;
+    private String captionTextDayColor;
     private int captionTextColor = Color.BLACK;
     private float captionTextSize = 0;
     private int dayCircleColor = Color.GRAY;
@@ -27,6 +28,12 @@ public class DayColorView extends View {
     private TextPaint textPaint;
     private float mTextWidth;
     private float mTextHeight;
+
+    private TextPaint textPaint2;
+    private float mTextWidth2;
+    private float mTextHeight2;
+
+    private int marginFromCaptionText = 130;
 
     public DayColorView(Context context) {
         super(context);
@@ -56,6 +63,13 @@ public class DayColorView extends View {
             {
                 captionText = context.getString(R.string.not_set);
             }
+
+            captionTextDayColor = a.getString(R.styleable.DayColorView_captionTextDayColor);
+            if (captionTextDayColor == null)
+            {
+                captionTextDayColor = context.getString(R.string.unknown);
+            }
+
             captionTextColor = a.getColor(R.styleable.DayColorView_captionTextColor, captionTextColor);
             captionTextSize = a.getDimension(R.styleable.DayColorView_captionTextSize, getResources().getDimension(R.dimen.tempo_days_left_text_size));
             dayCircleColor = a.getColor(R.styleable.DayColorView_dayCircleColor, ContextCompat.getColor(context, R.color.tempo_undecided_day_bg));
@@ -67,6 +81,9 @@ public class DayColorView extends View {
         // Set up a default TextPaint object
         textPaint = new TextPaint();
         setTextPaintAndMeasurements();
+
+        textPaint2 = new TextPaint();
+        setTextPaint2AndMeasurements();
 
         // set up a default Paint object
         circlePaint = new Paint();
@@ -97,6 +114,11 @@ public class DayColorView extends View {
                 paddingTop + (contentHeight + mTextHeight) / 2,
                 textPaint);
 
+        canvas.drawText(captionTextDayColor,
+                paddingLeft + (contentWidth - mTextWidth2) / 2,
+                paddingTop + (contentHeight + mTextHeight2 + marginFromCaptionText) / 2,
+                textPaint2);
+
     }
 
 
@@ -113,9 +135,27 @@ public class DayColorView extends View {
         mTextHeight = fontMetrics.bottom;
     }
 
+    private void setTextPaint2AndMeasurements() {
+        // set-up a default TextPaint object.
+        textPaint2.setFlags(Paint.ANTI_ALIAS_FLAG);
+        textPaint2.setTextAlign(Paint.Align.LEFT);
+        textPaint2.setTextSize(captionTextSize);
+        textPaint2.setColor(captionTextColor);
+
+        // compute the dimensions that will be used to draw the text.
+        mTextWidth2 = textPaint2.measureText(captionTextDayColor);
+        Paint.FontMetrics fontMetrics = textPaint2.getFontMetrics();
+        mTextHeight2 = fontMetrics.bottom;
+    }
 
     public void setCaptionText(String text) {
         captionText = text;
+        setTextPaintAndMeasurements();
+        invalidate();
+    }
+
+    public void setCaptionTextDayColor(String text) {
+        captionTextDayColor = text;
         setTextPaintAndMeasurements();
         invalidate();
     }

@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(LOG_TAG, "color of the next day = " + tdc.getCouleurJourJ1().toString());
                     binding.todayDcv.setDayCircleColor(tdc.getCouleurJourJ());
                     binding.tomorrowDcv.setDayCircleColor(tdc.getCouleurJourJ1());
-                    binding.todayDcv.setCaptionText(getString(R.string.dcv_today_tx, getString(tdc.getCouleurJourJ().getStringResId())));
-                    binding.tomorrowDcv.setCaptionText(getString(R.string.dcv_tomorrow_tx, getString(tdc.getCouleurJourJ1().getStringResId())));
+                    binding.todayDcv.setCaptionTextDayColor(getString(tdc.getCouleurJourJ().getStringResId()));
+                    binding.tomorrowDcv.setCaptionTextDayColor(getString(tdc.getCouleurJourJ1().getStringResId()));
                     checkColor4Notif(tdc.getCouleurJourJ1());
                 }
                 else {

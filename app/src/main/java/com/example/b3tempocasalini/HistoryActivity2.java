@@ -56,7 +56,7 @@ public class HistoryActivity2 extends AppCompatActivity implements AdapterView.O
         if (edfApi != null)
         {
             // Call the API.
-            apiTempoHistory(2022);
+            apiTempoHistory(2023);
         }
     }
 

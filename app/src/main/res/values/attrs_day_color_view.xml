@@ -4,5 +4,6 @@
         <attr name="captionTextSize" format="dimension" />
         <attr name="captionTextColor" format="color" />
         <attr name="dayCircleColor" format="color" />
+        <attr name="captionTextDayColor" format="string"></attr>
     </declare-styleable>
 </resources>
