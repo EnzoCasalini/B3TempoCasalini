@@ -15,4 +15,6 @@
     <string name="blue">Bleu</string>
     <string name="white">Blanc</string>
     <string name="unknown">ND</string>
+    <string name="date_title_tv_text">Date : </string>
+    <string name="color_title_tv_text">Couleur : </string>
 </resources>
